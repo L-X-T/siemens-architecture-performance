@@ -24,7 +24,8 @@
       </div>
 
       <div class="form-group">
-        <button (click)="search()" [disabled]="!from || !to"
+        <button (click)="search()"
+                [disabled]="!from || !to || (isLoadingFlight$ | async)"
           class="btn btn-default">
           Search
         </button>
@@ -42,6 +43,13 @@
           </div>
         </ng-container>
 
+        <div *ngIf="isLoadingFlight$ | async">
+          ... loading flights ...
+        </div>
+
+        <div *ngIf="loadingFlightsError$ | async as loadingFlightsError" class="text-danger">
+          {{ loadingFlightsError }}
+        </div>
       </div>
     </form>
 
