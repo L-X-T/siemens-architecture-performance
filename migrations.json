@@ -1,105 +1,53 @@
 {
   "migrations": [
     {
-      "version": "12.5.0-beta.1",
-      "description": "Rename the workspace-schematic script into workspace-generator script",
-      "factory": "./src/migrations/update-12-5-0/add-target-dependencies",
-      "cli": "nx",
-      "package": "@nrwl/workspace",
-      "name": "add-target-dependencies"
-    },
-    {
-      "cli": "nx",
-      "version": "12.3.5-beta.0",
-      "description": "Convert targets using @nrwl/angular:webpack-browser with the buildTarget option set to use the @nrwl/angular:delegate-build executor instead.",
-      "factory": "./src/migrations/update-12-3-0/convert-webpack-browser-build-target-to-delegate-build",
-      "package": "@nrwl/angular",
-      "name": "convert-webpack-browser-build-target-to-delegate-build"
-    },
-    {
-      "cli": "nx",
-      "version": "12.9.0",
-      "description": "Fixes invalid importPaths for buildable and publishable libs.",
-      "factory": "./src/migrations/update-12-9-0/update-invalid-import-paths",
-      "package": "@nrwl/angular",
-      "name": "update-invalid-import-paths"
-    },
-    {
-      "version": "12.0.1",
-      "factory": "./update-12/schematic-options",
-      "description": "Remove invalid 'skipTests' option in '@schematics/angular:module' Angular schematic options.",
-      "package": "@angular/cli",
-      "name": "schematic-options-12"
-    },
-    {
-      "version": "12.1.0",
-      "factory": "./update-12/replace-prod-flag",
-      "description": "Replace the deprecated '--prod' in package.json scripts.",
-      "package": "@angular/cli",
-      "name": "replace-deprecated-prod-flag"
-    },
-    {
-      "version": "12.0.2",
-      "description": "Automatically migrates shadow-piercing selector from `/deep/` to the recommended alternative `::ng-deep`.",
-      "factory": "./migrations/deep-shadow-piercing-selector/index",
+      "version": "16.0.0",
+      "description": "As of Angular v16, the `moduleId` property of `@Component` is deprecated as it no longer has any effect.",
+      "factory": "./migrations/remove-module-id/bundle",
       "package": "@angular/core",
-      "name": "migration-v12-deep-shadow-piercing-selector"
+      "name": "migration-v16-remove-module-id"
     },
     {
-      "cli": "nx",
-      "version": "12.8.0-beta.0",
-      "description": "Remove Typescript Preprocessor Plugin",
-      "factory": "./src/migrations/update-12-8-0/remove-typescript-plugin",
-      "package": "@nrwl/cypress",
-      "name": "remove-typescript-plugin"
+      "version": "16.0.0",
+      "description": "In Angular version 15.2, the guard and resolver interfaces (CanActivate, Resolve, etc) were deprecated. This migration removes imports and 'implements' clauses that contain them.",
+      "factory": "./migrations/guard-and-resolve-interfaces/bundle",
+      "package": "@angular/core",
+      "name": "migration-v16-guard-and-resolve-interfaces"
     },
     {
-      "version": "12.4.0-beta.1",
-      "cli": "nx",
-      "description": "Add testEnvironment: 'jsdom' in web apps + libraries",
-      "factory": "./src/migrations/update-12-4-0/add-test-environment-for-node",
-      "package": "@nrwl/jest",
-      "name": "support-jest-27"
+      "version": "16.0.0-0",
+      "description": "Updates the Angular CDK to v16",
+      "factory": "./ng-update/index#updateToV16",
+      "package": "@angular/cdk",
+      "name": "migration-v16"
     },
     {
-      "version": "12.4.0-beta.1",
-      "cli": "nx",
-      "description": "Support for Jest 27 via updating ts-jest + jest-preset-angular",
-      "factory": "./src/migrations/update-12-4-0/update-jest-preset-angular",
-      "package": "@nrwl/jest",
-      "name": "update-ts-jest-and-jest-preset-angular"
+      "description": "The road to v15.2",
+      "version": "15.2.0",
+      "factory": "./15_2_0/index",
+      "package": "@ngrx/store",
+      "name": "ngrx-store-migration-15-2-0"
     },
     {
-      "version": "12.6.0-beta.0",
-      "cli": "nx",
-      "description": "Uses `getJestProjects()` to populate projects array in root level `jest.config.js` file.",
-      "factory": "./src/migrations/update-12-6-0/update-base-jest-config",
-      "package": "@nrwl/jest",
-      "name": "update-jest-config-to-use-util"
+      "description": "The road to v16.0-beta",
+      "version": "16.0.0-beta",
+      "factory": "./16_0_0-beta/index",
+      "package": "@ngrx/store",
+      "name": "ngrx-store-migration-16-0-0-beta"
     },
     {
-      "cli": "nx",
-      "version": "12.4.0-beta.0",
-      "description": "Remove ESLint parserOptions.project config if no rules requiring type-checking are in use",
-      "factory": "./src/migrations/update-12-4-0/remove-eslint-project-config-if-no-type-checking-rules",
-      "package": "@nrwl/linter",
-      "name": "remove-eslint-project-config-if-no-type-checking-rules"
+      "description": "The road to v15.2.0",
+      "version": "15.2.0",
+      "factory": "./15_2_0/index",
+      "package": "@ngrx/router-store",
+      "name": "ngrx-router-store-migration-05"
     },
     {
-      "cli": "nx",
-      "version": "12.9.0-beta.0",
-      "description": "Add outputs for caching",
-      "factory": "./src/migrations/update-12-9-0/add-outputs",
-      "package": "@nrwl/linter",
-      "name": "add-outputs"
-    },
-    {
-      "cli": "nx",
-      "version": "12.9.0-beta.0",
-      "description": "Remove ESLint parserOptions.project config if no rules requiring type-checking are in use",
-      "factory": "./src/migrations/update-12-4-0/remove-eslint-project-config-if-no-type-checking-rules",
-      "package": "@nrwl/linter",
-      "name": "remove-eslint-project-config-if-no-type-checking-rules-again"
+      "description": "As of NgRx v16, `LetModule` and `PushModule` are deprecated in favor of standalone `LetDirective` and `PushPipe`.",
+      "version": "16.0.0",
+      "factory": "./16_0_0/index",
+      "package": "@ngrx/component",
+      "name": "ngrx-component-migration-16"
     }
   ]
 }
