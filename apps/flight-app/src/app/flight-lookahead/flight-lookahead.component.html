@@ -17,6 +17,10 @@
     <div *ngIf="online$ | async; else isOffline" style="background-color: darkgreen">Online</div>
     <ng-template #isOffline><div style="background-color: darkred">Offline</div></ng-template>
 
+    <div class="control-group">
+      <button class="btn btn-click" (click)="refresh()">Refresh</button>
+    </div>
+
     <div *ngIf="isLoading">Loading ...</div>
     <div *ngIf="!isLoading && (diff$ | async) as diff">Differenz: {{ diff }}</div>
 
