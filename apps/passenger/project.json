@@ -16,7 +16,7 @@
   "prefix": "passenger",
   "targets": {
     "build": {
-      "executor": "ngx-build-plus:browser",
+      "executor": "@nrwl/angular:webpack-browser",
       "options": {
         "outputPath": "dist/apps/passenger",
         "index": "apps/passenger/src/index.html",
@@ -32,7 +32,11 @@
           "apps/flight-app/src/assets/css/demo.css",
           "apps/flight-app/src/assets/css/themify-icons.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/passenger/webpack.config.js"
+        },
+        "commonChunk": false
       },
       "configurations": {
         "production": {
@@ -53,7 +57,10 @@
               "replace": "apps/passenger/src/environments/environment.ts",
               "with": "apps/passenger/src/environments/environment.prod.ts"
             }
-          ]
+          ],
+          "customWebpackConfig": {
+            "path": "apps/passenger/webpack.prod.config.js"
+          }
         },
         "development": {
           "buildOptimizer": false,
@@ -67,7 +74,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "ngx-build-plus:dev-server",
+      "executor": "@nrwl/angular:webpack-dev-server",
       "configurations": {
         "production": {
           "browserTarget": "passenger:build:production"
@@ -76,12 +83,17 @@
           "browserTarget": "passenger:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "ngx-build-plus:extract-i18n",
       "options": {
-        "browserTarget": "passenger:build"
+        "browserTarget": "passenger:build",
+        "extraWebpackConfig": "apps/passenger/webpack.config.js"
       }
     },
     "lint": {
