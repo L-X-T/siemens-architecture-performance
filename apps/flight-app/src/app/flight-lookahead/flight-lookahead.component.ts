@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Flight } from '@flight-workspace/flight-lib';
+import { Flight, handleInput } from '@flight-workspace/flight-lib';
 import { combineLatest, interval, merge, Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, pairwise, retry, startWith, switchMap, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, pairwise, retry, startWith, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'flight-workspace-flight-lookahead',
@@ -29,19 +29,8 @@ export class FlightLookaheadComponent implements OnInit {
     /*this.control = new FormControl();
     const input$ = this.control.valueChanges.pipe(debounceTime(300));*/
 
-    const fromInput$ = this.fromControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      // filter((input) => input.length > 2),
-      distinctUntilChanged()
-    );
-
-    const toInput$ = this.toControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      // filter((input) => input.length > 2),
-      distinctUntilChanged()
-    );
+    const fromInput$ = this.fromControl.valueChanges.pipe(handleInput());
+    const toInput$ = this.toControl.valueChanges.pipe(handleInput());
 
     /*this.flights$ = this.control.valueChanges.pipe(
       debounceTime(300),
@@ -92,7 +81,7 @@ export class FlightLookaheadComponent implements OnInit {
     );
   }
 
-  load(from: string, to: string = ''): Observable<Flight[]> {
+  load(from: string, to = ''): Observable<Flight[]> {
     const url = 'http://www.angular.at/api/flight';
     const params = new HttpParams().set('from', from).set('to', to);
     const headers = new HttpHeaders().set('Accept', 'application/json');
