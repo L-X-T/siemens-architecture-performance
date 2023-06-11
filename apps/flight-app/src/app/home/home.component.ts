@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit {
     return this._userName;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  changed($event): void {
-    console.debug('$event.detail ', $event.target.detail);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  changed($event: any): void {
+    console.debug('$event.detail ', $event.detail);
 
     this.expertMode = $event.detail;
   }
