@@ -6,7 +6,7 @@
   "prefix": "passenger",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
+      "executor": "@nx/angular:ng-packagr-lite",
       "options": {
         "project": "libs/passenger/domain/ng-package.json"
       },
@@ -21,7 +21,7 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/passenger/domain"],
       "options": {
         "jestConfig": "libs/passenger/domain/jest.config.ts",
@@ -29,7 +29,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["libs/passenger/domain/src/**/*.ts", "libs/passenger/domain/src/**/*.html"]
       }

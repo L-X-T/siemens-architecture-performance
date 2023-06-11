@@ -6,7 +6,7 @@
   "prefix": "flight",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:ng-packagr-lite",
+      "executor": "@nx/angular:ng-packagr-lite",
       "options": {
         "tsConfig": "libs/dashboard-lib/tsconfig.lib.json",
         "project": "libs/dashboard-lib/ng-package.json"
@@ -18,13 +18,13 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["libs/dashboard-lib/src/**/*.ts", "libs/dashboard-lib/src/**/*.html"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/dashboard-lib"],
       "options": {
         "jestConfig": "libs/dashboard-lib/jest.config.ts",

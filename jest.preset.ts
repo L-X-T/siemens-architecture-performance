@@ -1,7 +1,7 @@
-const nxPreset = require('@nrwl/jest/preset');
+const nxPreset = require('@nx/jest/preset');
 
 module.exports = {
   ...nxPreset,
-  resolver: '@nrwl/jest/plugins/resolver',
+  resolver: '@nx/jest/plugins/resolver',
   testEnvironment: 'jest-environment-jsdom'
 };

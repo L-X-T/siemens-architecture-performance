@@ -1,13 +1,13 @@
 {
   "root": true,
   "ignorePatterns": ["coverage/*", "dist/*", "node_modules/*", "tools/*"],
-  "plugins": ["@angular-eslint", "@nrwl/nx", "@typescript-eslint", "prettier"],
+  "plugins": ["@angular-eslint", "@nx", "@typescript-eslint", "prettier"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "extends": ["eslint:recommended", "plugin:prettier/recommended"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,

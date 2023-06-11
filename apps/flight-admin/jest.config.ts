@@ -3,12 +3,7 @@ export default {
   displayName: 'flight-admin',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {
-    'ts-jest': {
-      stringifyContentPathRegex: '\\.(html|svg)$',
-      tsconfig: '<rootDir>/tsconfig.spec.json'
-    }
-  },
+  globals: {},
   coverageDirectory: '../../coverage/apps/flight-admin',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',

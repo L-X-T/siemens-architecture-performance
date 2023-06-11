@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SearchComponent } from './search.component';
 import { PassengerDomainModule } from '@flight-workspace/passenger/domain';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { LetModule } from '@ngrx/component';
       }
     ]),
     PassengerDomainModule,
-    LetModule
+    LetDirective
   ],
   declarations: [SearchComponent],
   exports: [SearchComponent]
