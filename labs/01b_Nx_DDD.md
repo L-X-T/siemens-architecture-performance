@@ -13,15 +13,15 @@ So far, we've only used a simplified version of the architecture matrix presente
 
 ## Create a New Application
 
-1. Add the Nx plugin ``@angular-architects/ddd``:
+1. Add the Nx plugin ``@angular-architects/ddd`` (please note, that it may already be in your ``package.json``):
 
     ```
-    ng add @angular-architects/ddd
+    nx add @angular-architects/ddd
     ```
 
 2. This command added some linting rules to your global ``.eslintrc.json``. Find out which ones and what they do.
 
-    **Hint:** This task is a bit easier, if you use your IDE or editor (e. g. Visual Studio Code) to look into the current git staging environment.
+   **Hint:** This task is a bit easier, if you use your IDE or editor (e. g. Visual Studio Code) to look into the current git staging environment.
 
 3. Add an ``luggage`` domain with an application of it's own:
 
@@ -41,21 +41,21 @@ So far, we've only used a simplified version of the architecture matrix presente
     npm run dep-graph
     ```
 
-    After filtering for ``luggage`` it should show this luggage application:
+   After filtering for ``luggage`` it should show this luggage application:
 
     <img src="https://i.imgur.com/XXZKzEm.png" width="180">
 
 6. Inspect the generated libs and the generated app. You should find the following:
 
-   - Assigned tags within ``angular.json``
+  - Assigned tags within ``angular.json``
 
-   - Further access restrictions within ``.eslintrc.json``.
+  - Further access restrictions within ``.eslintrc.json``.
 
-   - A luggage data service, a luggage entity, and a check-in facade within the generated domain library
+  - A luggage data service, a luggage entity, and a check-in facade within the generated domain library
 
-   - A check-in component within the generated feature library
+  - A check-in component within the generated feature library
 
-    **Hint:** This task is a bit easier, if you use your IDE or editor (e. g. Visual Studio Code) to look into the current git staging environment.
+   **Hint:** This task is a bit easier, if you use your IDE or editor (e. g. Visual Studio Code) to look into the current git staging environment.
 
 7. Make yourself familiar with these generated building blocks.
 
@@ -98,9 +98,9 @@ Now, let's try out if the generated access rules protect our architecture.
 
 2. Open the file ``luggage-feature-report-loss.module.ts`` and import the ``LuggageFeatureCheckinModule`` and the ``FlightLibModule``.
 
-    **Hint:** You might need to create the necessary imports by hand.
+   **Hint:** You might need to create the necessary imports by hand.
 
-    **Hint:** If you get linting errors in your IDE/ editor, ignore them for the time being.
+   **Hint:** If you get linting errors in your IDE/ editor, ignore them for the time being.
 
     <details>
     <summary>Show code</summary>
@@ -135,7 +135,7 @@ Now, let's try out if the generated access rules protect our architecture.
     nx lint luggage-feature-report-loss
     ```
 
-    You should get the following linting errors because the previously imported two modules violate our architecture:
+   You should get the following linting errors because the previously imported two modules violate our architecture:
 
     ```
     ERROR: D:/bak/beratung/angular2/workshops_advanced/advanced-nx-workspace/libs/luggage/feature-report-loss/src/lib/luggage-feature-report-loss.module.ts:6:1 - A project tagged with "type:feature" can only depend on libs tagged with "type:ui", "type:domain-logic", "type:util"
@@ -173,7 +173,7 @@ Now, let's try out if the generated access rules protect our architecture.
     export class LuggageFeatureCheckinModule {}
     ```
 
-    For the sake of simplicity, we only use one route per feature module.
+   For the sake of simplicity, we only use one route per feature module.
 
 2. Do the same in the ``luggage-feature-report-loss.module.ts``.
 
@@ -251,7 +251,7 @@ Now, let's try out if the generated access rules protect our architecture.
     export class AppModule {}
     ```
 
-    Please note that these routes implement **lazy loading** of **feature modules**. Hence, we must **not import** these modules.
+   Please note that these routes implement **lazy loading** of **feature modules**. Hence, we must **not import** these modules.
 
 4. Switch to your ``app.component.html`` and add exchange the hard coded reference to a feature component by a ``router-outlet`` and a menu pointing to both features:
 
@@ -306,67 +306,6 @@ Now, let's try out if the generated access rules protect our architecture.
 6. Start the luggage app and make sure the routing works.
 
     <img src="https://i.imgur.com/YxdZxWz.png" width="400">
-
-## Bonus: Detecting Affected Libraries
-
-After performing some changes, it's important to know which apps and libs might be affected by it. To rule out all the others, Nx can dramatically speed up retesting and recompiling your system.
-
-1. If not already done, **initialize a new git repo** in your workspace root:
-
-    ```
-    git init
-    ```
-
-    We need Git here, because Nx uses the Git history to find out what changed.
-
-1. Open your ``nx.json`` and make sure, the branch affected/defaultBase points to the name of your main branch:
-
-    ```json
-    "affected": {
-        "defaultBase": "main"
-    }
-    ```
-
-
-
-2. Commit all your changes:
-
-    ```
-    git add *
-    git commit -m "whatever ;-p"
-    ```
-
-3. Make sure your main branch is called ``main`` to follow current conventions (originally it was called ``master``):
-
-    ```
-    git branch -M main
-    ```
-
-    **Remarks:** Our Nx configuration is assuming that the branch is called main. You can find the setting in your ``nx.json`` within the node ``affected/defaultBase``.
-
-4. Switch to the ``luggage-feature-checkin`` lib and open the file ``luggage-feature-checkin.module.ts``.
-
-5. Add a comment at the end to change the file.
-
-6. Run the script ``affected:dep-graph``.
-
-    ```
-    npm run affected:dep-graph
-    ```
-
-7. Now, you should see all affected libs and apps highlighted.
-
-8. To get the same information on the console, execute the following scripts:
-
-    ```
-    npm run affected:libs
-    npm run affected:apps
-    ```
-
-    **Info:** Please also note, that the script ``affected:build`` only builds the affected apps including all the libs they depend on. Also, ``affected:test`` only executes the unit tests of all affected libs and/or apps. The scripts ``affected:e2e`` do the same for end-2-end tests and ``affected:lint`` only executes the linter for them.
-
-    **Important:** Before calling ``affected:build`` you have to compile everything to fill the Nx cache: ``npx nx build luggage --with-deps``.
-
 
 ## Bonus: Implement an UI Library **
 
