@@ -2,8 +2,13 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, OnInit } from '@angular/core';
 import { Flight, FlightService } from '@flight-workspace/flight-lib';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FlightBookingModule } from '../flight-booking.module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, FormsModule, FlightBookingModule],
   selector: 'flight-search',
   templateUrl: './flight-search.component.html',
   styleUrls: ['./flight-search.component.css']
