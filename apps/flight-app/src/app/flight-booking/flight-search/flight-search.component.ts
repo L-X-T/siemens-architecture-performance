@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { Flight, FlightService } from '@flight-workspace/flight-lib';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'flight-search',
   templateUrl: './flight-search.component.html',
   styleUrls: ['./flight-search.component.css']
 })
-export class FlightSearchComponent implements OnInit {
+export class FlightSearchComponent {
   from = 'Hamburg'; // in Germany
   to = 'Graz'; // in Austria
   urgent = false;
@@ -18,21 +19,35 @@ export class FlightSearchComponent implements OnInit {
     5: true
   };
 
-  constructor(private flightService: FlightService) {}
+  flightsSignal = signal<Flight[]>([]);
 
-  get flights(): Flight[] {
-    return this.flightService.flights;
-  }
-
-  ngOnInit(): void {}
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly flightService = inject(FlightService);
+  private readonly effectRef = effect(() => console.log(this.flightsSignal()));
 
   search(): void {
-    if (!this.from || !this.to) return;
+    if (!this.from || !this.to) {
+      return;
+    }
 
-    this.flightService.load(this.from, this.to, this.urgent);
+    this.flightService
+      .find(this.from, this.to, this.urgent)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((flights) => this.flightsSignal.set(flights));
   }
 
   delay(): void {
-    this.flightService.delay();
+    this.flightsSignal.update((flights) => {
+      const date = new Date(flights[0].date);
+      date.setTime(date.getTime() + 15 * 1000 * 60);
+      const delayedFlight = { ...flights[0], date: date.toISOString() };
+      return [delayedFlight, ...flights.slice(1)];
+    });
+
+    this.flightsSignal.mutate((flights) => {
+      const date = new Date(flights[0].date);
+      date.setTime(date.getTime() + 15 * 1000 * 60);
+      flights[0] = { ...flights[0], date: date.toISOString() };
+    });
   }
 }
