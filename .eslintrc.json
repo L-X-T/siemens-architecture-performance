@@ -65,7 +65,7 @@
           }
         ],
         "@angular-eslint/no-empty-lifecycle-method": "warn",
-        // "@angular-eslint/prefer-on-push-component-change-detection": "warn",
+        "@angular-eslint/prefer-on-push-component-change-detection": "off",
         "@typescript-eslint/naming-convention": [
           "warn",
           {
