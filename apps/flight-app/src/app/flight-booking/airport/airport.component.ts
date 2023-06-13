@@ -1,16 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AirportService } from '@flight-workspace/flight-lib';
-import { Observable, Observer, Subject, Subscription, takeUntil } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-airport',
   templateUrl: './airport.component.html'
 })
-export class AirportComponent implements OnDestroy {
-  airports: string[] = [];
-  readonly airports$ = this.airportService.findAll();
-  private readonly airportsObserver: Observer<string[]> = {
+export class AirportComponent {
+  // airports: string[] = [];
+  readonly airports$ = inject(AirportService).findAll();
+  /*private readonly airportsObserver: Observer<string[]> = {
     next: (airports) => (this.airports = airports),
     error: (err) => console.error(err),
     complete: () => console.log('Observable completed!')
@@ -44,5 +42,5 @@ export class AirportComponent implements OnDestroy {
     // 2 takeUntil subject
     this.airports$.pipe(takeUntil(this.terminator$)).subscribe(this.airportsObserver);
     // this.airports$.pipe(takeUntil(this.terminator$)).subscribe(this.airportsObserver); // 2nd
-  }
+  }*/
 }
