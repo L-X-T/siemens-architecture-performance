@@ -1,10 +1,26 @@
-<div class="card">
+<div *ngIf="{ airports: airports$ | async }; let data" class="card">
   <div class="header">
     <h1 class="title">Airports</h1>
   </div>
   <div class="content">
     <div class="row">
-      <div class="col-lg-3" *ngFor="let airport of airports$ | async">
+      <div class="col-lg-3" *ngFor="let airport of airports"><!-- subscription -->
+        {{ airport }}
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-3" *ngFor="let airport of data.airports"><!-- async 1 -->
+        {{ airport }}
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-3" *ngFor="let airport of data.airports"><!-- async 1 -->
         {{ airport }}
       </div>
     </div>
