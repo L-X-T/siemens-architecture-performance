@@ -1,27 +1,37 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { AirportService } from '@flight-workspace/flight-lib';
-import { Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
+import { delay, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-airport',
   templateUrl: './airport.component.html'
 })
 export class AirportComponent implements OnDestroy {
-  readonly airports$ = inject(AirportService).findAll().pipe(share());
+  readonly airports$ = inject(AirportService).findAll().pipe(delay(3000), share());
 
   protected airports: string[] = [];
   private readonly airportsObserver: Observer<string[]> = {
-    next: (airports) => (this.airports = airports),
-    error: (err) => console.error(err),
+    next: (airports) => {
+      this.airports = airports;
+      this.airportsIsLoading = false;
+      this.airportsTakeUntilIsLoading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.airportsIsLoading = false;
+      this.airportsTakeUntilIsLoading = false;
+    },
     complete: () => console.log('Observable completed!')
   };
 
   // 1 subscription object
   private readonly subscription = new Subscription();
+  airportsIsLoading = true;
 
   // 2 takeUntil subject
   private readonly onDestroySubject = new Subject();
   readonly terminator$ = this.onDestroySubject.asObservable();
+  airportsTakeUntilIsLoading = true;
 
   constructor(private airportService: AirportService) {
     this.subscribeToAirports();
