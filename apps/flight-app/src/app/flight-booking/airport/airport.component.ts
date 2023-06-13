@@ -1,6 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { AirportService } from '@flight-workspace/flight-lib';
-import { delay, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
+import { catchError, delay, Observer, of, share, Subject, Subscription, takeUntil } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-airport',
@@ -16,10 +17,12 @@ export class AirportComponent implements OnDestroy {
       this.airportsIsLoading = false;
       this.airportsTakeUntilIsLoading = false;
     },
-    error: (err) => {
+    error: (err: HttpErrorResponse) => {
       console.error(err);
       this.airportsIsLoading = false;
+      this.airportsErrorMessage = err.message;
       this.airportsTakeUntilIsLoading = false;
+      this.airportsTakeUntilErrorMessage = err.message;
     },
     complete: () => console.log('Observable completed!')
   };
@@ -27,11 +30,22 @@ export class AirportComponent implements OnDestroy {
   // 1 subscription object
   private readonly subscription = new Subscription();
   airportsIsLoading = true;
+  airportsErrorMessage = '';
 
   // 2 takeUntil subject
   private readonly onDestroySubject = new Subject();
   readonly terminator$ = this.onDestroySubject.asObservable();
   airportsTakeUntilIsLoading = true;
+  airportsTakeUntilErrorMessage = '';
+
+  // 3 async airports error handling
+  readonly asyncAirports$ = this.airports$.pipe(
+    catchError((err) => {
+      this.asyncAirportsErrorMessage = err.message;
+      return of([]);
+    })
+  );
+  asyncAirportsErrorMessage = '';
 
   constructor(private airportService: AirportService) {
     this.subscribeToAirports();
