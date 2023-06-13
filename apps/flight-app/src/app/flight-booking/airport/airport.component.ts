@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { AirportService } from '@flight-workspace/flight-lib';
 import { catchError, delay, Observer, of, share, Subject, Subscription, takeUntil } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-airport',
@@ -46,6 +47,13 @@ export class AirportComponent implements OnDestroy {
     })
   );
   asyncAirportsErrorMessage = '';
+
+  // 4 NG V16 takeUntilDestroyed()
+  airports16: string[] = [];
+  private readonly airportsDestroyed$ = inject(AirportService)
+    .findAll()
+    .pipe(takeUntilDestroyed())
+    .subscribe((airports) => (this.airports16 = airports));
 
   constructor(private airportService: AirportService) {
     this.subscribeToAirports();

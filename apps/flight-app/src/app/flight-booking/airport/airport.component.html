@@ -51,6 +51,27 @@
       </div>
     </div>
   </div>
+
+  <div class="content">
+    <div class="row" *ngIf="airportsIsLoading">
+      <div class="col-lg-12">
+        ...isLoading...
+      </div>
+    </div>
+    <div class="row" *ngIf="airportsErrorMessage">
+      <div class="col-lg-12 text-danger">
+        {{ airportsErrorMessage }}
+      </div>
+    </div>
+    <div class="row" *ngIf="!airportsIsLoading && !airportsErrorMessage">
+      <div class="col-lg-3" *ngFor="let airport of airports16"><!-- subscription -->
+        {{ airport }}
+      </div>
+      <div class="col-lg-12" *ngIf="airports16?.length === 0">
+        {{ 'No airports found' }}
+      </div>
+    </div>
+  </div>
 </div>
 
 
