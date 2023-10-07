@@ -2,7 +2,7 @@
 
 This project was generated with the [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4 by [@Manfred Steyer](https://twitter.com/ManfredSteyer) and has since been improved and update by [@LX_T](https://twitter.com/LX_T), currently using Angular V16.
 
-## Slides
+## Slides 
 
 You'll find the workshop slides in the `slides` directory.
 
